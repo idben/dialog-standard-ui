@@ -7,10 +7,7 @@
     "url": "https://github.com/idben"
   },
   "homepage": "https://github.com/idben/dialog-standard-ui",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/idben/dialog-standard-ui.git"
-  },
+  "repository": "https://github.com/idben/dialog-standard-ui",
   "license": "MIT",
   "keywords": [
     "dialog",
@@ -23,11 +20,5 @@
     "accessibility",
     "web-components"
   ],
-  "skills": [
-    {
-      "name": "dialog-standard-ui",
-      "description": "使用原生 <dialog> 元素建構對話框系統，取代 alert/confirm/prompt",
-      "path": ".claude/skills/dialog-standard-ui"
-    }
-  ]
+  "skills": ".claude/skills/dialog-standard-ui"
 }
