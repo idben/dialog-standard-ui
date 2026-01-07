@@ -523,7 +523,7 @@ cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
 1. **使用此專案的 marketplace.json**
    ```bash
    # 使用本專案的 marketplace
-   claude --marketplace https://raw.githubusercontent.com/idben/dialog-standard-ui/main/marketplace.json
+   claude --marketplace https://raw.githubusercontent.com/idben/dialog-standard-ui/main/.claude-plugin/marketplace.json
    ```
 
 2. **或加入到你的 marketplace.json**
@@ -545,7 +545,8 @@ cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
 ```
 dialog-standard-ui/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin 元數據
+│   ├── plugin.json          # Plugin 元數據
+│   └── marketplace.json     # Marketplace 配置
 ├── .claude/
 │   └── skills/
 │       └── dialog-standard-ui/
@@ -553,7 +554,6 @@ dialog-standard-ui/
 │           ├── dialog-css.md            # CSS 程式碼 reference
 │           ├── dialog-traditional.md    # 傳統版本 reference
 │           └── dialog-module.md         # ES Module 版本 reference
-├── marketplace.json         # Marketplace 配置
 └── README.md
 ```
 
