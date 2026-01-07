@@ -1,0 +1,314 @@
+# dialog.css - 完整樣式檔案
+
+**用途**：Dialog Standard UI 的完整 CSS 樣式，適用於所有版本（傳統版本和 ES Module 版本）
+
+**何時使用此檔案**：
+- 使用者要求建立 Dialog Standard UI 時
+- 需要樣式檔案時
+- 無論選擇傳統版本或 ES Module 版本，都需要此 CSS 檔案
+
+---
+
+## 完整程式碼
+
+```css
+/**
+ * Dialog Standard UI - 統一樣式系統
+ * 使用原生 <dialog> 元素的自動置中功能
+ */
+
+/* ==================== 基礎對話框樣式 ==================== */
+
+.std-dialog {
+  /* 使用瀏覽器預設的自動置中機制 */
+  position: fixed;
+  inset: 0;              /* 將四個邊都設為 0 */
+  margin: auto;          /* 自動計算邊距實現水平和垂直置中 */
+
+  border: none;
+  border-radius: 8px;    /* Shoelace 風格：較小的圓角 */
+  padding: 0;
+  max-width: 90vw;
+  width: 480px;
+  max-height: 90vh;      /* 限制最大高度避免超出視窗 */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);  /* Shoelace 風格：較淺的陰影 */
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+
+  /* 關閉狀態樣式（動畫起始） */
+  opacity: 0;
+  transform: scale(0.95);
+
+  /* 動畫設定 */
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out,
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+/* 開啟狀態 */
+.std-dialog[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 定義動畫初始狀態 */
+@starting-style {
+  .std-dialog[open] {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* 背景遮罩層 */
+.std-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  transition:
+    background-color 0.3s ease-out,
+    backdrop-filter 0.3s ease-out,
+    overlay 0.3s allow-discrete;
+}
+
+@starting-style {
+  .std-dialog[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+  }
+}
+
+/* ==================== 對話框內部結構 ==================== */
+
+/* 標題區 */
+.std-dialog__header {
+  padding: 24px 24px 16px;
+  border-bottom: none;   /* Shoelace 風格：無需分隔線 */
+}
+
+.std-dialog__title {
+  margin: 0;
+  font-size: 18px;          /* Shoelace 風格：稍小的標題 */
+  font-weight: 600;
+  color: #1e293b;           /* 稍微更深的灰色 */
+}
+
+/* 內容區 */
+.std-dialog__body {
+  padding: 24px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.std-dialog__message {
+  margin: 0;
+  font-size: 15px;
+}
+
+.std-dialog__content {
+  font-size: 15px;
+}
+
+/* 輸入框 - Shoelace 風格 */
+.std-dialog__input {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;   /* Shoelace 風格：1px 邊框 */
+  border-radius: 4px;          /* 小圓角 */
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.std-dialog__input:focus {
+  border-color: #0ea5e9;       /* focus 使用 primary 色 */
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);  /* 淺藍色 ring */
+}
+
+/* 錯誤訊息 */
+.std-dialog__error {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #ef4444;
+}
+
+/* 按鈕區 */
+.std-dialog__footer {
+  padding: 16px 24px;
+  background: #f9fafb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  /* Shoelace 風格：無需分隔線 */
+}
+
+/* 按鈕樣式 */
+.std-dialog__btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;    /* Shoelace 風格：小圓角 */
+  font-size: 14px;
+  font-weight: 500;      /* Shoelace 風格：較細的字重 */
+  cursor: pointer;
+  transition: background-color 0.15s ease;  /* 只過渡背景色 */
+  font-family: inherit;
+  min-width: 80px;
+}
+
+/* 主要按鈕 - Shoelace Primary 色 */
+.std-dialog__btn--primary {
+  background: #0ea5e9;   /* Shoelace 風格：純色藍 */
+  color: white;
+}
+
+.std-dialog__btn--primary:hover {
+  background: #0284c7;   /* hover 稍微變暗 */
+}
+
+.std-dialog__btn--primary:active {
+  background: #0369a1;   /* active 更暗 */
+}
+
+/* 次要按鈕 */
+.std-dialog__btn--secondary {
+  background: white;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.std-dialog__btn--secondary:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.std-dialog__btn--secondary:active {
+  background: #f3f4f6;
+}
+
+/* ==================== 不同類型對話框的變化 ==================== */
+
+/* 警告類型 - Shoelace 風格：純色 */
+.std-dialog--alert .std-dialog__header {
+  background: #0ea5e9;   /* 使用與按鈕相同的純色藍 */
+  border: none;
+  border-bottom: none;   /* 明確移除 border-bottom */
+  padding: 20px 24px;
+}
+
+.std-dialog--alert .std-dialog__title {
+  color: white;
+}
+
+/* 確認類型 */
+.std-dialog--confirm .std-dialog__message {
+  font-size: 16px;
+}
+
+/* ==================== 響應式設計 ==================== */
+
+@media (max-width: 640px) {
+  .std-dialog {
+    width: 95vw;
+    max-width: none;
+    margin: 20px auto;
+  }
+
+  .std-dialog__header {
+    padding: 20px 20px 12px;
+  }
+
+  .std-dialog__title {
+    font-size: 18px;
+  }
+
+  .std-dialog__body {
+    padding: 20px;
+  }
+
+  .std-dialog__message,
+  .std-dialog__content {
+    font-size: 14px;
+  }
+
+  .std-dialog__footer {
+    padding: 12px 20px;
+    flex-direction: column;
+  }
+
+  .std-dialog__btn {
+    width: 100%;
+  }
+}
+
+/* ==================== 無障礙增強 ==================== */
+
+/* 聚焦狀態 */
+.std-dialog__btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.std-dialog__input:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* 深色模式支援 */
+@media (prefers-color-scheme: dark) {
+  .std-dialog {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  /* header 無 border，不需設定 */
+
+  .std-dialog__title {
+    color: #f9fafb;
+  }
+
+  .std-dialog__body {
+    color: #d1d5db;
+  }
+
+  .std-dialog__footer {
+    background: #111827;
+    border-color: #374151;
+  }
+
+  .std-dialog__input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .std-dialog__input:focus {
+    border-color: #667eea;
+  }
+
+  .std-dialog__btn--secondary {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .std-dialog__btn--secondary:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+}
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .std-dialog,
+  .std-dialog::backdrop {
+    transition: none;
+  }
+
+  .std-dialog__btn {
+    transition: none;
+  }
+}
+```

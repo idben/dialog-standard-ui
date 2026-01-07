@@ -1,0 +1,483 @@
+# Dialog Standard UI
+
+使用 HTML 原生 `<dialog>` 元素建構的現代化對話框元件庫，完全取代傳統的 `alert()`、`confirm()`、`prompt()`。
+
+## ✨ 特色
+
+- ✅ 使用原生 `<dialog>` 元素，符合 Web 標準
+- ✅ 完全取代 `window.alert()`, `window.confirm()`, `window.prompt()`
+- ✅ 支援 Promise/async-await，程式碼更簡潔
+- ✅ 提供兩種版本：傳統版本與 ES Module 版本
+- ✅ Shoelace 風格：純色、扁平化設計
+- ✅ 完整的無障礙支援（ARIA、鍵盤操作、焦點管理）
+- ✅ 現代化動畫效果
+- ✅ 響應式設計
+- ✅ 深色模式支援
+- ✅ 零依賴，僅需引入 CSS
+
+## 📦 檔案說明
+
+```
+├── dialog.js           # 傳統版本（全域變數）
+├── dialog-module.js    # ES Module 版本
+├── dialog.css          # 樣式檔案（共用）
+├── index.html           # 完整示範（傳統版本）
+└── demo-module.html    # ES Module 示範
+```
+
+## 🚀 使用方式
+
+### 🤖 方式 0：使用 Claude Code Skill 自動生成（推薦）
+
+本專案提供 Claude Code skill，可以自動生成所有檔案和程式碼。
+
+**使用步驟**：
+
+1. **克隆或下載此專案**（包含 `.claude/skills/dialog-standard-ui/` 目錄）
+
+2. **在專案目錄中啟動 Claude Code**
+   ```bash
+   cd agent-skill-01
+   claude
+   ```
+
+3. **觸發 skill**
+
+   在對話中提及以下任一關鍵字即可自動啟動：
+   ```
+   alert、confirm、prompt、modal、popup、對話框、彈出視窗、訊息框、確認框、輸入框
+   ```
+
+   範例對話：
+   ```
+   你：你有什麼 skill?
+   Claude：(從對話中看看有無 dialog-standard-ui 的字樣)
+   你：幫我建立一個 alert 對話框系統
+   Claude：我會使用 Dialog Standard UI skill 來建立...
+   ```
+
+4. **選擇版本**
+
+   Claude 會詢問你：
+   - 要使用傳統版本還是 ES Module 版本？
+   - 是否需要示範頁面？
+   - 是否整合 Shoelace 組件？
+
+5. **自動生成檔案**
+
+   Claude 會根據你的選擇生成：
+   - `dialog.css`（樣式檔案）
+   - `dialog.js` 或 `dialog-module.js`（邏輯檔案）
+   - `demo.html` 或 `demo-module.html`（示範頁面，選用）
+
+**優點**：
+- ✅ 自動生成完整、正確的程式碼
+- ✅ 根據需求客製化（版本、示範頁面、UI 框架）
+- ✅ 包含最佳實踐和完整文檔
+- ✅ 避免手動複製貼上錯誤
+
+---
+
+### 方式 1：傳統引入（全域變數）
+
+適用於簡單頁面或不支援 ES Module 的環境。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="stylesheet" href="dialog.css">
+</head>
+<body>
+  <button onclick="showDialog()">顯示對話框</button>
+
+  <script src="dialog.js"></script>
+  <script>
+    async function showDialog() {
+      await dialog.alert('Hello World!');
+    }
+  </script>
+</body>
+</html>
+```
+
+### 方式 2：ES Module 引入
+
+適用於現代瀏覽器和打包工具（Webpack, Vite, Rollup）。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <link rel="stylesheet" href="dialog.css">
+</head>
+<body>
+  <button id="btn">顯示對話框</button>
+
+  <script type="module">
+    import dialog from './dialog-module.js';
+
+    document.getElementById('btn').addEventListener('click', async () => {
+      await dialog.alert('Hello World!');
+    });
+  </script>
+</body>
+</html>
+```
+
+## 📚 API 文件
+
+### dialog.alert(message, title?)
+
+顯示訊息對話框（取代 `window.alert()`）。
+
+**參數**:
+- `message` (string) - 訊息內容，支援 HTML
+- `title` (string, 選填) - 標題，預設為「提示」
+
+**返回**: `Promise<void>`
+
+**範例**:
+```javascript
+// 基本用法
+await dialog.alert('操作成功！');
+
+// 自訂標題
+await dialog.alert('資料已儲存', '成功');
+
+// HTML 內容
+await dialog.alert('<strong>粗體</strong><br>換行文字');
+```
+
+### dialog.confirm(message, title?, options?)
+
+顯示確認對話框（取代 `window.confirm()`）。
+
+**參數**:
+- `message` (string) - 訊息內容
+- `title` (string, 選填) - 標題，預設為「確認」
+- `options` (object, 選填):
+  - `confirmText` (string) - 確認按鈕文字，預設為「確定」
+  - `cancelText` (string) - 取消按鈕文字，預設為「取消」
+
+**返回**: `Promise<boolean>` - `true` 表示確認，`false` 表示取消
+
+**範例**:
+```javascript
+// 基本用法
+const confirmed = await dialog.confirm('確定要刪除嗎？');
+if (confirmed) {
+  console.log('使用者確認刪除');
+}
+
+// 自訂按鈕文字
+const result = await dialog.confirm(
+  '確定要送出嗎？',
+  '確認',
+  { confirmText: '送出', cancelText: '再想想' }
+);
+```
+
+### dialog.prompt(message, placeholder?, title?, options?)
+
+顯示輸入對話框（取代 `window.prompt()`）。
+
+**參數**:
+- `message` (string) - 訊息內容
+- `placeholder` (string, 選填) - 輸入框提示文字
+- `title` (string, 選填) - 標題，預設為「輸入」
+- `options` (object, 選填):
+  - `defaultValue` (string) - 預設值
+  - `validate` (function) - 驗證函數，返回 `true` 表示通過，返回字串表示錯誤訊息
+
+**返回**: `Promise<string|null>` - 輸入的值，或 `null`（取消時）
+
+**範例**:
+```javascript
+// 基本用法
+const name = await dialog.prompt('請輸入您的名字：', '王小明');
+if (name) {
+  console.log('輸入的名字：', name);
+}
+
+// 帶驗證
+const email = await dialog.prompt(
+  '請輸入 Email：',
+  '',
+  '輸入',
+  {
+    validate: (value) => {
+      if (!value) return '請輸入 Email';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return 'Email 格式不正確';
+      }
+      return true;
+    }
+  }
+);
+```
+
+### dialog.custom(options)
+
+顯示自訂對話框。
+
+**參數**:
+- `options` (object):
+  - `title` (string) - 標題
+  - `content` (string) - 內容（支援 HTML）
+  - `buttons` (array) - 按鈕陣列，每個按鈕包含：
+    - `text` (string) - 按鈕文字
+    - `primary` (boolean) - 是否為主要按鈕
+  - `className` (string, 選填) - 自訂 CSS class
+
+**返回**: `Promise<object>` - 包含 `buttonIndex` 和 `button` 屬性
+
+**範例**:
+```javascript
+const result = await dialog.custom({
+  title: '選擇操作',
+  content: '請選擇要執行的操作：',
+  buttons: [
+    { text: '取消', primary: false },
+    { text: '儲存', primary: false },
+    { text: '送出', primary: true }
+  ]
+});
+
+console.log('選擇的按鈕索引：', result.buttonIndex);
+console.log('選擇的按鈕：', result.button);
+```
+
+## ⌨️ 鍵盤操作
+
+- **Tab**: 在對話框內的元素間切換焦點
+- **Enter**: 確認操作（聚焦於按鈕時）或送出輸入（輸入框）
+- **Escape**: 關閉對話框
+- **Space**: 按下聚焦的按鈕
+
+## ♿ 無障礙功能
+
+- ✅ **ARIA 標籤**: 所有對話框包含適當的 `role` 和 `aria-modal` 屬性
+- ✅ **焦點管理**: 開啟時自動聚焦，關閉後返回觸發元素
+- ✅ **焦點鎖定**: 焦點被限制在對話框內
+- ✅ **語意化標記**: 使用正確的 HTML 元素
+- ✅ **鍵盤完全可操作**: 所有功能都可透過鍵盤完成
+- ✅ **深色模式支援**: 自動適應系統深色模式
+- ✅ **動畫偏好**: 尊重 `prefers-reduced-motion` 設定
+
+## 🎨 樣式自訂
+
+所有樣式都定義在 `dialog.css` 中，可以透過覆寫 CSS 變數或 class 來自訂：
+
+```css
+/* 自訂主色調 */
+.std-dialog__btn--primary {
+  background: #your-color;
+}
+
+/* 自訂圓角 */
+.std-dialog {
+  border-radius: 12px;
+}
+
+/* 自訂陰影 */
+.std-dialog {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+```
+
+## 🌐 瀏覽器支援
+
+- ✅ Chrome 37+
+- ✅ Edge 79+
+- ✅ Firefox 98+
+- ✅ Safari 15.4+
+
+對於舊版瀏覽器，需要使用 [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill)。
+
+## 📝 範例頁面
+
+- **index.html**: 完整功能展示（傳統版本）
+- **demo-module.html**: ES Module 用法展示
+
+## 🔧 在打包工具中使用
+
+### Vite
+
+```javascript
+import dialog from './dialog-module.js';
+import './dialog.css';
+
+await dialog.alert('Hello World!');
+```
+
+### Webpack
+
+```javascript
+import dialog from './dialog-module.js';
+import './dialog.css';
+
+await dialog.alert('Hello World!');
+```
+
+## 🎯 在 Vue/React 中使用
+
+ES Module 版本 (`dialog-module.js`) 是標準的 JavaScript 模組，完全相容 Vue 和 React。
+
+### 在 Vue 3 中使用
+
+```vue
+<template>
+  <div>
+    <button @click="handleAlert">顯示訊息</button>
+    <button @click="handleConfirm">確認操作</button>
+    <button @click="handlePrompt">輸入資料</button>
+  </div>
+</template>
+
+<script setup>
+import dialog from './dialog-module.js'
+import './dialog.css'
+
+const handleAlert = async () => {
+  await dialog.alert('操作成功！', '成功')
+}
+
+const handleConfirm = async () => {
+  const confirmed = await dialog.confirm('確定要刪除嗎？', '確認')
+  if (confirmed) {
+    console.log('使用者確認刪除')
+  }
+}
+
+const handlePrompt = async () => {
+  const name = await dialog.prompt('請輸入您的名字：', '王小明', '輸入')
+  if (name) {
+    console.log('使用者輸入：', name)
+  }
+}
+</script>
+```
+
+### 在 React 中使用
+
+```jsx
+import { useState } from 'react'
+import dialog from './dialog-module.js'
+import './dialog.css'
+
+function App() {
+  const handleAlert = async () => {
+    await dialog.alert('操作成功！', '成功')
+  }
+
+  const handleConfirm = async () => {
+    const confirmed = await dialog.confirm('確定要刪除嗎？', '確認')
+    if (confirmed) {
+      console.log('使用者確認刪除')
+    }
+  }
+
+  const handlePrompt = async () => {
+    const name = await dialog.prompt('請輸入您的名字：', '王小明', '輸入')
+    if (name) {
+      console.log('使用者輸入：', name)
+    }
+  }
+
+  return (
+    <div>
+      <button onClick={handleAlert}>顯示訊息</button>
+      <button onClick={handleConfirm}>確認操作</button>
+      <button onClick={handlePrompt}>輸入資料</button>
+    </div>
+  )
+}
+
+export default App
+```
+
+### 在 Vue 2 中使用
+
+```vue
+<template>
+  <div>
+    <button @click="handleAlert">顯示訊息</button>
+    <button @click="handleConfirm">確認操作</button>
+  </div>
+</template>
+
+<script>
+import dialog from './dialog-module.js'
+import './dialog.css'
+
+export default {
+  methods: {
+    async handleAlert() {
+      await dialog.alert('操作成功！', '成功')
+    },
+    async handleConfirm() {
+      const confirmed = await dialog.confirm('確定要刪除嗎？', '確認')
+      if (confirmed) {
+        console.log('使用者確認刪除')
+      }
+    }
+  }
+}
+</script>
+```
+
+### 關鍵優勢
+
+✅ **標準 ES Module**：無需額外轉換，直接 import
+✅ **框架無關**：純 JavaScript + 原生 `<dialog>`，不依賴任何框架
+✅ **零衝突**：不會與 Vue/React 的虛擬 DOM 衝突，因為 dialog 元素直接掛載到 `document.body`
+✅ **Promise API**：完美搭配 async/await，符合現代開發習慣
+✅ **TypeScript 友善**：可輕鬆加入型別定義檔 (.d.ts)
+
+### SSR 注意事項
+
+如果使用 Nuxt 或 Next.js 等 SSR 框架：
+
+**Nuxt 3:**
+```vue
+<script setup>
+import dialog from './dialog-module.js'
+
+// 確保只在 client-side 執行
+const handleClick = async () => {
+  if (process.client) {
+    await dialog.alert('操作成功！')
+  }
+}
+</script>
+```
+
+**Next.js:**
+```jsx
+'use client'  // 標記為 Client Component
+
+import dialog from './dialog-module.js'
+
+export default function MyComponent() {
+  const handleClick = async () => {
+    await dialog.alert('操作成功！')
+  }
+
+  return <button onClick={handleClick}>顯示對話框</button>
+}
+```
+
+## 📄 授權
+
+本專案基於 `/dialog-standard-ui` skill 建構。
+
+## 🤝 貢獻
+
+歡迎提交 Issue 或 Pull Request！
+
+---
+
+🎨 **設計風格**: 採用 Shoelace 風格的扁平化設計
+📦 **技術棧**: 原生 JavaScript, HTML5 `<dialog>`, CSS3
+⚡ **零依賴**: 無需任何第三方函式庫

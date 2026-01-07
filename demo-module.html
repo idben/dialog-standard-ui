@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dialog Standard UI - ES Module 範例</title>
+
+  <!-- Shoelace CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css" />
+
+  <!-- Shoelace JS -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
+
+  <link rel="stylesheet" href="dialog.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+    }
+
+    h1 {
+      color: #1f2937;
+      font-size: 32px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      color: #374151;
+      font-size: 24px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .demo-item {
+      padding: 20px;
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .demo-item h3 {
+      color: #1f2937;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .demo-item p {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    sl-button::part(base) {
+      width: 100%;
+    }
+
+    .code-block {
+      background: #1f2937;
+      color: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    .code-block code {
+      color: #a5b4fc;
+    }
+
+    sl-alert {
+      margin-top: 24px;
+    }
+
+    sl-alert ul {
+      list-style-position: inside;
+    }
+
+    sl-alert li {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Dialog Standard UI - ES Module 範例</h1>
+    <p class="subtitle">使用 import 語法引入 dialog 模組</p>
+
+    <!-- 使用說明 -->
+    <section class="section">
+      <sl-alert variant="primary" open>
+        <sl-icon slot="icon" name="code-square"></sl-icon>
+        <strong>💡 ES Module 用法</strong>
+        <div class="code-block" style="margin-top: 12px;">
+<code>&lt;script type="module"&gt;
+  import dialog from './dialog-module.js';
+
+  // 使用 dialog 方法
+  await dialog.alert('訊息內容', '標題');
+  const confirmed = await dialog.confirm('確認訊息？');
+  const input = await dialog.prompt('請輸入：');
+&lt;/script&gt;</code>
+        </div>
+      </sl-alert>
+    </section>
+
+    <!-- 訊息對話框範例 -->
+    <section class="section">
+      <h2>1. 訊息對話框</h2>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>基本用法</h3>
+          <p>最簡單的訊息提示</p>
+          <sl-button variant="primary" onclick="demoAlert1()">顯示訊息</sl-button>
+        </div>
+
+        <div class="demo-item">
+          <h3>自訂標題</h3>
+          <p>可以自訂對話框標題</p>
+          <sl-button variant="primary" onclick="demoAlert2()">自訂標題</sl-button>
+        </div>
+
+        <div class="demo-item">
+          <h3>HTML 內容</h3>
+          <p>支援 HTML 格式化內容</p>
+          <sl-button variant="primary" onclick="demoAlert3()">HTML 內容</sl-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+<code>import dialog from './dialog-module.js';
+
+// 基本用法
+await dialog.alert('操作成功！');
+
+// 自訂標題
+await dialog.alert('資料已儲存', '成功');
+
+// HTML 內容
+await dialog.alert('&lt;strong&gt;粗體文字&lt;/strong&gt;&lt;br&gt;一般文字');</code>
+      </div>
+    </section>
+
+    <!-- 確認對話框範例 -->
+    <section class="section">
+      <h2>2. 確認對話框</h2>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>基本確認</h3>
+          <p>返回 true 或 false</p>
+          <sl-button variant="primary" onclick="demoConfirm1()">確認操作</sl-button>
+        </div>
+
+        <div class="demo-item">
+          <h3>自訂按鈕</h3>
+          <p>自訂按鈕文字</p>
+          <sl-button variant="primary" onclick="demoConfirm2()">自訂按鈕</sl-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+<code>import dialog from './dialog-module.js';
+
+// 基本確認
+const confirmed = await dialog.confirm('確定要刪除嗎？');
+if (confirmed) {
+  console.log('使用者點擊確定');
+}
+
+// 自訂按鈕文字
+const result = await dialog.confirm(
+  '確定要送出嗎？',
+  '確認',
+  { confirmText: '送出', cancelText: '再想想' }
+);</code>
+      </div>
+    </section>
+
+    <!-- 輸入對話框範例 -->
+    <section class="section">
+      <h2>3. 輸入對話框</h2>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>基本輸入</h3>
+          <p>取得使用者輸入</p>
+          <sl-button variant="primary" onclick="demoPrompt1()">輸入文字</sl-button>
+        </div>
+
+        <div class="demo-item">
+          <h3>帶驗證</h3>
+          <p>驗證使用者輸入</p>
+          <sl-button variant="primary" onclick="demoPrompt2()">驗證輸入</sl-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+<code>import dialog from './dialog-module.js';
+
+// 基本輸入
+const name = await dialog.prompt('請輸入您的名字：', '王小明');
+if (name) {
+  console.log('輸入的名字：', name);
+}
+
+// 帶驗證
+const email = await dialog.prompt(
+  '請輸入 Email：',
+  '',
+  '輸入',
+  {
+    validate: (value) => {
+      if (!value) return '請輸入 Email';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return 'Email 格式不正確';
+      }
+      return true;
+    }
+  }
+);</code>
+      </div>
+    </section>
+
+    <!-- 自訂對話框範例 -->
+    <section class="section">
+      <h2>4. 自訂對話框</h2>
+
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>多按鈕選擇</h3>
+          <p>提供多個操作選項</p>
+          <sl-button variant="primary" onclick="demoCustom1()">多按鈕</sl-button>
+        </div>
+
+        <div class="demo-item">
+          <h3>自訂內容</h3>
+          <p>完全自訂內容與樣式</p>
+          <sl-button variant="primary" onclick="demoCustom2()">自訂內容</sl-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+<code>import dialog from './dialog-module.js';
+
+// 多按鈕選擇
+const result = await dialog.custom({
+  title: '選擇操作',
+  content: '請選擇要執行的操作：',
+  buttons: [
+    { text: '取消', primary: false },
+    { text: '儲存', primary: false },
+    { text: '送出', primary: true }
+  ]
+});
+console.log('選擇的按鈕索引：', result.buttonIndex);</code>
+      </div>
+    </section>
+
+    <!-- 優點說明 -->
+    <section class="section">
+      <sl-alert variant="success" open>
+        <sl-icon slot="icon" name="check-circle"></sl-icon>
+        <strong>✨ ES Module 的優點</strong>
+        <ul style="margin: 8px 0 0 20px;">
+          <li><strong>模組化</strong>：避免全域變數污染</li>
+          <li><strong>樹搖優化</strong>：打包工具可移除未使用的程式碼</li>
+          <li><strong>現代標準</strong>：符合 ES6+ 規範</li>
+          <li><strong>TypeScript 支援</strong>：更容易加入型別定義</li>
+          <li><strong>打包工具友善</strong>：適用於 Webpack、Vite、Rollup 等</li>
+        </ul>
+      </sl-alert>
+    </section>
+  </div>
+
+  <!-- 使用 ES Module 引入 dialog -->
+  <script type="module">
+    import dialog from './dialog-module.js';
+
+    // 訊息對話框範例
+    window.demoAlert1 = async () => {
+      await dialog.alert('操作成功！');
+    };
+
+    window.demoAlert2 = async () => {
+      await dialog.alert('資料已儲存到資料庫', '成功');
+    };
+
+    window.demoAlert3 = async () => {
+      await dialog.alert(
+        '<div style="text-align: center;"><strong style="color: #0ea5e9;">這是粗體藍色文字</strong><br><br>這是一般文字</div>',
+        'HTML 內容範例'
+      );
+    };
+
+    // 確認對話框範例
+    window.demoConfirm1 = async () => {
+      const confirmed = await dialog.confirm('確定要刪除這個項目嗎？此操作無法復原。', '刪除確認');
+      await dialog.alert(
+        confirmed ? '已確認刪除' : '已取消操作',
+        '結果'
+      );
+    };
+
+    window.demoConfirm2 = async () => {
+      const confirmed = await dialog.confirm(
+        '確定要送出表單嗎？',
+        '確認送出',
+        { confirmText: '送出', cancelText: '再檢查一次' }
+      );
+      await dialog.alert(
+        confirmed ? '表單已送出' : '已取消送出',
+        '結果'
+      );
+    };
+
+    // 輸入對話框範例
+    window.demoPrompt1 = async () => {
+      const name = await dialog.prompt('請輸入您的名字：', '王小明', '輸入名稱');
+      if (name !== null) {
+        await dialog.alert(`您好，${name}！`, '歡迎');
+      }
+    };
+
+    window.demoPrompt2 = async () => {
+      const email = await dialog.prompt(
+        '請輸入您的 Email 地址：',
+        '',
+        '輸入 Email',
+        {
+          validate: (value) => {
+            if (!value) return '請輸入 Email 地址';
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+              return 'Email 格式不正確';
+            }
+            return true;
+          }
+        }
+      );
+      if (email !== null) {
+        await dialog.alert(`已記錄 Email：${email}`, '成功');
+      }
+    };
+
+    // 自訂對話框範例
+    window.demoCustom1 = async () => {
+      const result = await dialog.custom({
+        title: '選擇操作',
+        content: '<p style="margin: 0;">請選擇要執行的操作：</p>',
+        buttons: [
+          { text: '取消', primary: false },
+          { text: '儲存草稿', primary: false },
+          { text: '立即送出', primary: true }
+        ]
+      });
+
+      const actions = ['取消', '儲存草稿', '立即送出'];
+      await dialog.alert(`您選擇了：${actions[result.buttonIndex]}`, '操作結果');
+    };
+
+    window.demoCustom2 = async () => {
+      await dialog.custom({
+        title: '使用者資訊',
+        content: `
+          <div style="padding: 10px 0;">
+            <p style="margin: 8px 0;"><strong>名稱：</strong>王小明</p>
+            <p style="margin: 8px 0;"><strong>Email：</strong>example@email.com</p>
+            <p style="margin: 8px 0;"><strong>角色：</strong>管理員</p>
+          </div>
+        `,
+        buttons: [{ text: '關閉', primary: true }]
+      });
+    };
+  </script>
+</body>
+</html>
