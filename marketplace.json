@@ -1,0 +1,21 @@
+{
+  "name": "Dialog Standard UI Marketplace",
+  "description": "原生 HTML <dialog> 元素的現代化對話框解決方案",
+  "version": "1.0.0",
+  "plugins": [
+    {
+      "name": "dialog-standard-ui",
+      "description": "使用 HTML <dialog> 元素建構現代化網頁互動介面",
+      "source": "https://github.com/idben/dialog-standard-ui",
+      "version": "1.0.0",
+      "author": "Ben Chen",
+      "tags": [
+        "dialog",
+        "modal",
+        "ui",
+        "shoelace",
+        "accessibility"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "dialog-standard-ui",
+  "description": "使用 HTML <dialog> 元素建構現代化網頁互動介面。完全取代傳統的 alert/confirm/prompt 及第三方 modal 套件。提供 Shoelace 風格的扁平化設計，支援無障礙性、動畫效果、響應式設計和深色模式。",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ben Chen",
+    "url": "https://github.com/idben"
+  },
+  "homepage": "https://github.com/idben/dialog-standard-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idben/dialog-standard-ui.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dialog",
+    "modal",
+    "alert",
+    "confirm",
+    "prompt",
+    "ui",
+    "shoelace",
+    "accessibility",
+    "web-components"
+  ],
+  "skills": [
+    {
+      "name": "dialog-standard-ui",
+      "description": "使用原生 <dialog> 元素建構對話框系統，取代 alert/confirm/prompt",
+      "path": ".claude/skills/dialog-standard-ui"
+    }
+  ]
+}

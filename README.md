@@ -1,6 +1,33 @@
 # Dialog Standard UI
 
+[![GitHub](https://img.shields.io/badge/GitHub-idben%2Fdialog--standard--ui-blue?logo=github)](https://github.com/idben/dialog-standard-ui)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/idben/dialog-standard-ui/blob/main/LICENSE)
+[![Claude Code Skill](https://img.shields.io/badge/Claude_Code-Skill-purple)](https://github.com/idben/dialog-standard-ui)
+
 使用 HTML 原生 `<dialog>` 元素建構的現代化對話框元件庫，完全取代傳統的 `alert()`、`confirm()`、`prompt()`。
+
+## 📥 快速安裝
+
+### 從 GitHub 克隆
+
+```bash
+# 克隆專案
+git clone https://github.com/idben/dialog-standard-ui.git
+cd dialog-standard-ui
+
+# 啟動 Claude Code
+claude
+```
+
+### 作為 Claude Code Plugin 安裝
+
+```bash
+# 安裝為本地 plugin
+claude --plugin https://github.com/idben/dialog-standard-ui
+
+# 或安裝到個人技能目錄
+cp -r .claude/skills/dialog-standard-ui ~/.claude/skills/
+```
 
 ## ✨ 特色
 
@@ -468,7 +495,73 @@ export default function MyComponent() {
 }
 ```
 
+## 🔌 作為 Claude Code Plugin 使用
+
+本專案已配置為 Claude Code Plugin，可以透過以下方式安裝：
+
+### 方法 1：從 GitHub 安裝
+
+```bash
+# 使用 Claude Code 安裝
+claude --plugin https://github.com/idben/dialog-standard-ui
+```
+
+### 方法 2：複製到個人技能目錄
+
+```bash
+# 克隆專案
+git clone https://github.com/idben/dialog-standard-ui.git
+
+# 複製 skill 到個人目錄
+cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
+```
+
+### 方法 3：加入到 Marketplace
+
+如果你想建立自己的 marketplace 或加入現有的 marketplace：
+
+1. **使用此專案的 marketplace.json**
+   ```bash
+   # 使用本專案的 marketplace
+   claude --marketplace https://raw.githubusercontent.com/idben/dialog-standard-ui/main/marketplace.json
+   ```
+
+2. **或加入到你的 marketplace.json**
+   ```json
+   {
+     "plugins": [
+       {
+         "name": "dialog-standard-ui",
+         "source": "https://github.com/idben/dialog-standard-ui"
+       }
+     ]
+   }
+   ```
+
+### Plugin 結構
+
+本專案包含完整的 plugin 配置：
+
+```
+dialog-standard-ui/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin 元數據
+├── .claude/
+│   └── skills/
+│       └── dialog-standard-ui/
+│           ├── SKILL.md                 # 主要 skill 定義
+│           ├── dialog-css.md            # CSS 程式碼 reference
+│           ├── dialog-traditional.md    # 傳統版本 reference
+│           └── dialog-module.md         # ES Module 版本 reference
+├── marketplace.json         # Marketplace 配置
+└── README.md
+```
+
+---
+
 ## 📄 授權
+
+MIT License - 詳見 [LICENSE](LICENSE) 檔案
 
 本專案基於 `/dialog-standard-ui` skill 建構。
 
