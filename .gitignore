@@ -1,6 +1,11 @@
 # Claude Code 本地設定（個人設定，不分享給團隊）
 .claude/settings.local.json
 
+# 專案內部文件（不上傳到 GitHub）
+task.md
+CLAUDE.md
+plan.md
+
 # macOS 系統檔案
 .DS_Store
 .AppleDouble
