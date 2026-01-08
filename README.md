@@ -32,7 +32,7 @@
 > | project | `--scope project` | 僅限當前專案，其他專案需重新安裝 |
 > | local | `--scope local` | 本地級別，不會被 git 追蹤 |
 >
-> 如果不指定 `--scope`，預設為 `project`，可能導致在其他專案無法安裝（顯示「已安裝」）。建議使用 `--scope user` 避免此問題。
+> **已知問題**：`--scope project` 目前可能無法正確限制範圍（[#14202](https://github.com/anthropics/claude-code/issues/14202)），建議使用 `--scope user` 明確全域安裝。
 
 ### 方法 2：手動複製到個人目錄
 
@@ -41,7 +41,7 @@
 git clone https://github.com/idben/dialog-standard-ui.git
 
 # 2. 複製 skill 到個人目錄
-cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
+cp -r dialog-standard-ui/skills/dialog-standard-ui ~/.claude/skills/
 
 # 3. 重新啟動 Claude Code
 ```
@@ -88,7 +88,7 @@ claude
 
 **使用步驟**：
 
-1. **克隆或下載此專案**（包含 `.claude/skills/dialog-standard-ui/` 目錄）
+1. **克隆或下載此專案**（包含 `skills/dialog-standard-ui/` 目錄）
 
 2. **在專案目錄中啟動 Claude Code**
    ```bash
@@ -541,7 +541,7 @@ claude --plugin https://github.com/idben/dialog-standard-ui
 git clone https://github.com/idben/dialog-standard-ui.git
 
 # 複製 skill 到個人目錄
-cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
+cp -r dialog-standard-ui/skills/dialog-standard-ui ~/.claude/skills/
 ```
 
 ### 方法 3：加入到 Marketplace
@@ -575,13 +575,12 @@ dialog-standard-ui/
 ├── .claude-plugin/
 │   ├── plugin.json          # Plugin 元數據
 │   └── marketplace.json     # Marketplace 配置
-├── .claude/
-│   └── skills/
-│       └── dialog-standard-ui/
-│           ├── SKILL.md                 # 主要 skill 定義
-│           ├── dialog-css.md            # CSS 程式碼 reference
-│           ├── dialog-traditional.md    # 傳統版本 reference
-│           └── dialog-module.md         # ES Module 版本 reference
+├── skills/                   # Skills 資料夾（符合官方規範）
+│   └── dialog-standard-ui/
+│       ├── SKILL.md                 # 主要 skill 定義
+│       ├── dialog-css.md            # CSS 程式碼 reference
+│       ├── dialog-traditional.md    # 傳統版本 reference
+│       └── dialog-module.md         # ES Module 版本 reference
 └── README.md
 ```
 
