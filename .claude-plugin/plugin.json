@@ -20,5 +20,5 @@
     "accessibility",
     "web-components"
   ],
-  "skills": "./.claude/skills"
+  "skills": "./skills"
 }
