@@ -8,25 +8,53 @@
 
 ## 📥 快速安裝
 
-### 從 GitHub 克隆
+### 方法 1：使用 Plugin 指令安裝（推薦）
+
+在 Claude Code 中執行：
+
+```bash
+# 步驟 1：添加 marketplace
+/plugin marketplace add idben/dialog-standard-ui
+
+# 步驟 2：安裝 plugin（建議使用 --scope user，所有專案都能使用）
+/plugin install dialog-standard-ui@dialog-standard-ui-marketplace --scope user
+
+# 或使用互動式介面
+/plugin
+# 然後在 Discover 分頁中找到並點擊安裝
+```
+
+> ⚠️ **安裝範圍說明**
+>
+> | 範圍 | 指令 | 說明 |
+> |------|------|------|
+> | **user**（推薦） | `--scope user` | 使用者級別，所有專案都能使用 |
+> | project | `--scope project` | 僅限當前專案，其他專案需重新安裝 |
+> | local | `--scope local` | 本地級別，不會被 git 追蹤 |
+>
+> 如果不指定 `--scope`，預設為 `project`，可能導致在其他專案無法安裝（顯示「已安裝」）。建議使用 `--scope user` 避免此問題。
+
+### 方法 2：手動複製到個人目錄
+
+```bash
+# 1. 克隆專案
+git clone https://github.com/idben/dialog-standard-ui.git
+
+# 2. 複製 skill 到個人目錄
+cp -r dialog-standard-ui/.claude/skills/dialog-standard-ui ~/.claude/skills/
+
+# 3. 重新啟動 Claude Code
+```
+
+### 方法 3：克隆專案直接使用
 
 ```bash
 # 克隆專案
 git clone https://github.com/idben/dialog-standard-ui.git
 cd dialog-standard-ui
 
-# 啟動 Claude Code
+# 啟動 Claude Code（skill 會自動載入）
 claude
-```
-
-### 作為 Claude Code Plugin 安裝
-
-```bash
-# 安裝為本地 plugin
-claude --plugin https://github.com/idben/dialog-standard-ui
-
-# 或安裝到個人技能目錄
-cp -r .claude/skills/dialog-standard-ui ~/.claude/skills/
 ```
 
 ## ✨ 特色
